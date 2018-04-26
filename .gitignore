@@ -64,3 +64,4 @@ db.json
 *.log
 node_modules/
 public/
+.deploy_git/
