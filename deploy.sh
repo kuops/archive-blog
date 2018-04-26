@@ -8,6 +8,6 @@ git commit -m "$git_commit_msg"
 git push origin master
 
 # hexo deploy to static website
-npm install
+npm --registry http://registry.cnpmjs.org install
 hexo clean
 hexo generate -d
