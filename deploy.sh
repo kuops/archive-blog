@@ -8,5 +8,6 @@ git commit -m "$git_commit_msg"
 git push origin master
 
 # hexo deploy to static website
+npm install
 hexo clean
 hexo generate -d
