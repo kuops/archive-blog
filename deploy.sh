@@ -10,4 +10,5 @@ git push origin master
 # hexo deploy to static website
 npm --registry http://registry.cnpmjs.org install
 hexo clean
+rm -rf /public
 hexo generate -d
