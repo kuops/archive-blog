@@ -1,4 +1,4 @@
-# blog-source-code
+# blog-source-code [![Build Status](https://travis-ci.org/kuops/blog-source-code.svg?branch=master)](https://travis-ci.org/kuops/blog-source-code)
 
 # 下载 Blog 源代码
 
