@@ -38,3 +38,12 @@ tags:
 npm install
 hexo s -i <ipaddress>
 ```
+# Travis CI 持续部署
+
+需要使用 Travis-cli 命令进行推送私钥，然后把公钥添加到 github
+
+```
+gem install travis
+travis login
+travis encrypt-file ~/.ssh/id_rsa add
+```
