@@ -47,10 +47,20 @@ gem install travis
 travis login
 travis encrypt-file /root/.ssh/id_rsa  --add
 ```
-travis encrypt 生成的文件多了一个转义符号,删除之
+travis encrypt 生成的 .travis.yml 有些问题,按如下设置
 
 ```
+mkdir  -p .travis
+mv id_rsa.enc .travis/
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_5bc884c9e074_key -iv $encrypted_5bc884c9e074_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- eval $(ssh-agent)
+- ssh-add ~/.ssh/id_rsa
+- git config --global user.name "kuops"
+- git config --global user.email opshsy@gmail.com
 ```
+
+
