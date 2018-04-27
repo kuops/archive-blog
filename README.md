@@ -45,5 +45,5 @@ hexo s -i <ipaddress>
 ```
 gem install travis
 travis login
-travis encrypt-file ~/.ssh/id_rsa add
+travis encrypt-file ~/.ssh/id_rsa  --add
 ```
