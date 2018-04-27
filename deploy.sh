@@ -8,6 +8,6 @@ git commit -m "$git_commit_msg"
 git push origin master
 
 # hexo deploy to static website
-npm --registry http://npm.proxy.ustclug.org/ install
+npm --registry http://npmreg.proxy.ustclug.org install
 hexo clean
 hexo generate -d
