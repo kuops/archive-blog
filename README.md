@@ -55,7 +55,7 @@ mv id_rsa.enc .travis/
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_5bc884c9e074_key -iv $encrypted_5bc884c9e074_iv
-  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+  -in .travis/id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/id_rsa
