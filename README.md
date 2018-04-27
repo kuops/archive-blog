@@ -45,5 +45,12 @@ hexo s -i <ipaddress>
 ```
 gem install travis
 travis login
-travis encrypt-file ~/.ssh/id_rsa  --add
+travis encrypt-file /root/.ssh/id_rsa  --add
+```
+travis encrypt 生成的文件多了一个转义符号,删除之
+
+```
+before_install:
+- openssl aes-256-cbc -K $encrypted_5bc884c9e074_key -iv $encrypted_5bc884c9e074_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
 ```
