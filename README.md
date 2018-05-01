@@ -63,4 +63,9 @@ before_install:
 - git config --global user.email opshsy@gmail.com
 ```
 
+# https
 
+使用免费的 Cloudflare 网站注册的 https , 并设置强制跳转，具体参考如下博客
+```
+https://molunerfinn.com/hexo-travisci-https/
+```
