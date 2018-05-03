@@ -1,9 +1,8 @@
 ---
 title: 使用 WSL 操作 Vagrant
 date: 2018-05-02 16:20:20
-tags:
+categories: 
 - vagrant
-- wsl
 ---
 
 ## 安装 VirtualBox
