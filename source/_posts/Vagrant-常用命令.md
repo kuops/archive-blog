@@ -75,11 +75,11 @@ vagrant halt [name|id]
 
 |选项 | 说明|
 |---|---|
-|--box-version| （可选）选定 box 的版本添加到 Vagrantfile|
-|--force| 如果指定，则此命令将覆盖任何现有的 Vagrantfile|
-|--minimal| 如果指定，将创建一个最小的 Vagrantfile。|
-|--output FILE|这将输出 Vagrantfile 到给定的文件。如果这是 `-`，则 Vagrantfile 将被发送到标准输出。|
-|--template FILE|提供用于生成 Vagrantfile 的自定义ERB模板。|
+|-\-box-version| （可选）选定 box 的版本添加到 Vagrantfile|
+|-\-force| 如果指定，则此命令将覆盖任何现有的 Vagrantfile|
+|-\-minimal| 如果指定，将创建一个最小的 Vagrantfile。|
+|-\-output FILE|这将输出 Vagrantfile 到给定的文件。如果这是 `-`，则 Vagrantfile 将被发送到标准输出。|
+|-\-template FILE|提供用于生成 Vagrantfile 的自定义ERB模板。|
 
 `vagrant init ` 例子
 
@@ -125,10 +125,10 @@ vagrant package [name|id]
 
 选项|说明
 ---|---
---base NAME |不是打包 Vagrant 管理的 VirtualBox 机器，而是打包 VirtualBox 管理的 VirtualBox 机器。 NAME 应该是 VirtualBox GUI 中机器的名称或UUID。目前该选项仅适用于 VirtualBox。
---output NAME| 生成的包将被保存为NAME。默认情况下，它将被保存为 package.box
---include x,y,z| 其他文件将随包装一起打包。这些可以被打包的Vagrantfile（下面记录）用来执行其他任务。
---vagrantfile FILE| 用框打包Vagrantfile，在 使用结果框时将其作为Vagrantfile加载次序的一部分加载。
+-\-base NAME |不是打包 Vagrant 管理的 VirtualBox 机器，而是打包 VirtualBox 管理的 VirtualBox 机器。 NAME 应该是 VirtualBox GUI 中机器的名称或UUID。目前该选项仅适用于 VirtualBox。
+-\-output NAME| 生成的包将被保存为NAME。默认情况下，它将被保存为 package.box
+-\-include x,y,z| 其他文件将随包装一起打包。这些可以被打包的Vagrantfile（下面记录）用来执行其他任务。
+-\-vagrantfile FILE| 用框打包Vagrantfile，在 使用结果框时将其作为Vagrantfile加载次序的一部分加载。
 
 
 
