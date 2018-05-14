@@ -1,7 +1,8 @@
 ---
 title: 使用 WSL 操作 Docker
 date: 2018-05-14 12:22:20
-tags:
+categories:
+- docker
 ---
 
 ## 设置 WSL 使用 Docker
