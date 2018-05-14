@@ -157,14 +157,14 @@ toc:
 
 # SNS Menu
 sns:
-    email: youremail@email.com
+    email: opshsy@gmail.com
     facebook: "https://www.facebook.com/facebook"
     twitter: "https://twitter.com/twitter"
     googleplus: "https://www.google.com/"
     weibo:
     instagram:
     tumblr:
-    github:
+    github: 
     linkedin:
     zhihu:
     bilibili:
@@ -178,7 +178,7 @@ sns_share:
     googleplus: true
     weibo: true
     linkedin: false
-    qq: false
+    qq: true
     telegram: false
 
 # Sidebar Customize
@@ -273,10 +273,10 @@ leancloud:
 
 # Busuanzi 不蒜子 Views
 busuanzi:
-    enable: false
-    all_site_uv: false
-    post_pv: false
-    busuanzi_pure_mini_js: "https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"
+    enable: true
+    all_site_uv: true
+    post_pv: true
+    busuanzi_pure_mini_js: "https://dn-lbsntatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"
 
 # Files Vendors
 # Set a CDN for the files src you want to customize. The url should with protocol.
@@ -304,4 +304,4 @@ vendors:
     # Prettify r298 (only prettify.js)
     prettify:
     # Material Icons 3.0.1
-    material_icons:
+    material_icos:
