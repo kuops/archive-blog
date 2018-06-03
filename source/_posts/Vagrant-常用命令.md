@@ -26,7 +26,7 @@ addreess 可以是以下三种任意一种：
 
 - Vagrant 公共镜像简写名称 ，如 "hashicorp/precise64"。
 - 文件路径或 `HTTP URL` 到目录中的框。对于HTTP，支持基本身份验证并且支持通过 `http_proxy` 变量进行下载 。HTTPS也受支持。
-- 网址直接一个盒子文件。在这种情况下，您必须指定一个--name标志，版本控制/更新将不起作用。
+- 网址直接一个盒子文件。在这种情况下，您必须指定一个 `--name` 标志，版本控制/更新将不起作用。
 
 **其他子命令**
 
@@ -75,11 +75,11 @@ vagrant halt [name|id]
 
 |选项 | 说明|
 |---|---|
-|-\-box-version| （可选）选定 box 的版本添加到 Vagrantfile|
-|-\-force| 如果指定，则此命令将覆盖任何现有的 Vagrantfile|
-|-\-minimal| 如果指定，将创建一个最小的 Vagrantfile。|
-|-\-output FILE|这将输出 Vagrantfile 到给定的文件。如果这是 `-`，则 Vagrantfile 将被发送到标准输出。|
-|-\-template FILE|提供用于生成 Vagrantfile 的自定义ERB模板。|
+|--box-version| （可选）选定 box 的版本添加到 Vagrantfile|
+|--force| 如果指定，则此命令将覆盖任何现有的 Vagrantfile|
+|--minimal| 如果指定，将创建一个最小的 Vagrantfile。|
+|--output FILE|这将输出 Vagrantfile 到给定的文件。如果这是 `-`，则 Vagrantfile 将被发送到标准输出。|
+|--template FILE|提供用于生成 Vagrantfile 的自定义ERB模板。|
 
 `vagrant init ` 例子
 
@@ -125,10 +125,10 @@ vagrant package [name|id]
 
 选项|说明
 ---|---
--\-base NAME |不是打包 Vagrant 管理的 VirtualBox 机器，而是打包 VirtualBox 管理的 VirtualBox 机器。 NAME 应该是 VirtualBox GUI 中机器的名称或UUID。目前该选项仅适用于 VirtualBox。
--\-output NAME| 生成的包将被保存为NAME。默认情况下，它将被保存为 package.box
--\-include x,y,z| 其他文件将随包装一起打包。这些可以被打包的Vagrantfile（下面记录）用来执行其他任务。
--\-vagrantfile FILE| 用框打包Vagrantfile，在 使用结果框时将其作为Vagrantfile加载次序的一部分加载。
+--base NAME |不是打包 Vagrant 管理的 VirtualBox 机器，而是打包 VirtualBox 管理的 VirtualBox 机器。 NAME 应该是 VirtualBox GUI 中机器的名称或UUID。目前该选项仅适用于 VirtualBox。
+--output NAME| 生成的包将被保存为NAME。默认情况下，它将被保存为 package.box
+--include x,y,z| 其他文件将随包装一起打包。这些可以被打包的Vagrantfile（下面记录）用来执行其他任务。
+--vagrantfile FILE| 用框打包Vagrantfile，在 使用结果框时将其作为Vagrantfile加载次序的一部分加载。
 
 
 
@@ -226,23 +226,36 @@ vagrant up [name|id]
 ```ruby
 # -*- mode: ruby -*-
 Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
   config.vm.provision "shell", inline: "echo Hello"
-
-  config.vm.define "web" do |web|
-    web.vm.box = "centos/7"
-    config.vm.network "public_network"
+  config.vm.define "node1" do |node1|
+    node1.vm.hostname = 'node1'
+    node1.vm.box = "centos/7"
+    node1.vm.network "private_network",ip: "10.0.100.101"
       config.vm.provider "virtualbox" do |vb|
-        vb.memory = "2048"
+        vb.memory = "1024"
       end
     end
-
-  config.vm.define "db",autostart: false do |db|
-    db.vm.box = "centos/7"
+  config.vm.define "node2" do |node2|
+    node2.vm.hostname = 'node2'
+    node2.vm.box = "centos/7"
+    node2.vm.network "private_network",ip: "10.0.100.102"
       config.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"
+        vb.memory = "1024"
       end
     end
-
+  config.vm.define "node3" do |node3|
+    node3.vm.hostname = 'node3'
+    node3.vm.box = "centos/7"
+    node3.vm.network "private_network",ip: "10.0.100.103"
+      config.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+      end
+    end
 end
 ```
 
@@ -268,4 +281,34 @@ config.vm.define "db"
 config.vm.define "db_follower", autostart: false
 ```
 
+## Vagrant Plugin
 
+中国地区下载插件方法
+```
+vagrant plugin install vagrant-vbguest  vagrant-hostmanager --plugin-clean-sources --plugin-source https://gems.ruby-china.org/
+vagrant reload
+```
+
+## CentOS 自定义镜像错误
+```
+Vagrant was unable to mount VirtualBox shared folders. This is usually
+because the filesystem "vboxsf" is not available. This filesystem is
+made available via the VirtualBox Guest Additions and kernel module.
+Please verify that these guest additions are properly installed in the
+guest. This is not a bug in Vagrant and is usually caused by a faulty
+Vagrant box. For context, the command attempted was:
+
+mount -t vboxsf -o uid=1000,gid=1000 vagrant /vagrant
+
+The error output from the command was:
+
+/sbin/mount.vboxsf: mounting failed with the error: No such device
+```
+解决方法，进入虚拟机安装以下软件包，需要注意当前 kernel 版本和 `kernel-headers`,`kernel-devel` 对应
+```
+vagrant ssh
+yum -y update
+yum -y install kernel-headers kernel-devel
+sudo /opt/VBoxGuestAdditions-*/init/vboxadd setup
+```
+或者下载 1804 版本的 box

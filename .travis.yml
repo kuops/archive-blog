@@ -11,7 +11,7 @@ install:
 - npm install
 - npm install hexo-cli -g
 script:
-- npm install hexo-deployer-git --save
+- npm install hexo-deployer-git hexo-renderer-jade hexo-renderer-stylus --save
 - hexo clean
 - hexo generate -d
 before_install:

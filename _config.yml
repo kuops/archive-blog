@@ -4,11 +4,11 @@
 
 # Site
 title: Kuops Blog
-subtitle: Hsy 的博客--学习笔记
+subtitle: 巧者劳而智者忧，无能者无所求
 description: 个人生活记录
-keywords: Ops,Kubernetes,Jenkins
+keywords: 
 author: kuops
-language: zh-CN
+language: zh-Hans
 timezone: Asia/Shanghai
 
 # URL
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: material
+theme: melody
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
