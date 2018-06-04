@@ -1,5 +1,5 @@
 ---
-title: 使用-kubeadm-快速安装-kubernets.md
+title: 使用 kubeadm 快速安装 kubernets 1.10.md
 date: 2018-06-04 15:53:15
 categories:
 - kubernetes
