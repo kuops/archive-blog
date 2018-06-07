@@ -5,34 +5,85 @@ categories:
 - kubernetes
 ---
 
+## 配置 vagrant
 
-## 升级 4.4 内核
-
-升级系统内核，并设置默认使用 4.4 内核启动
+Vagrantfile 如下：
 ```
-rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-yum --enablerepo=elrepo-kernel install -y kernel-lt
-sed  -i 's@GRUB_DEFAULT=.*@GRUB_DEFAULT=0@' /etc/default/grub
-grub2-mkconfig -o /boot/grub2/grub.cfg
-reboot
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+data_disk = './disk/kubernets_data_disk.vdi'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = 'centos/7'
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
+  config.vm.hostname = 'kubernetes'
+  config.vm.provider "virtualbox" do |vb|
+    if !File.exist?(data_disk)
+      # 100 * 1024M = 100G
+      vb.customize ['createhd', '--filename', data_disk, '--size', 100 * 1024]
+    end
+    vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', data_disk]
+    vb.memory = "4096"
+    vb.cpus = "2"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+set -e
+set -x
+
+if [ -f /etc/default/disk-format ]
+then
+   echo "disk is formated."
+   exit 0
+fi
+
+sudo fdisk -u /dev/sdb <<EOF
+n
+p
+1
+
+
+w
+EOF
+
+mkfs.xfs /dev/sdb1
+mkdir -p /data
+mount -t xfs /dev/sdb1 /data && sudo echo "/dev/sdb1 xfs        /data    defaults        0 0" >> /etc/fstab
+
+date > /etc/default/disk-format
+  SHELL
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "deploy done"
+  SHELL
+end
 ```
 
 ## 安装 Docker
 
 安装并配置 docker
 ```
+# 关闭 selinux
+sed -ri 's@^(SELINUX=).*@\1disabled@g' /etc/selinux/config
 #添加内核参数，确保 iptables 能够对 docker 网桥的流量进行处理。
 tee -a /etc/sysctl.d/kubernetes.conf << EOF
 #确保 iptables 能够对 docker 网桥的流量进行处理。
 net.ipv4.ip_forward=1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
+#解决删除已经死亡的容器时，提示 device or resource busy
+fs.may_detach_mounts = 1
 EOF
 sysctl --system
 
 #安装 docker-ce，安装 conntrack-tools 避免 kube-proxy 的一个报错
-wget -O /etc/yum.repos.d/docker-ce.repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+curl -sSL https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo >  /etc/yum.repos.d/docker-ce.repo
+
 yum -y install docker-ce conntrack-tools
 
 #启用 overlay2 驱动,和镜像加速
@@ -41,6 +92,7 @@ cat <<'EOF'> /etc/docker/daemon.json
 {
   "registry-mirrors": ["https://fz5yth0r.mirror.aliyuncs.com"],
   "storage-driver": "overlay2",
+  "data-root": "/data/docker",
   "storage-opts": [
     "overlay2.override_kernel_check=true"
   ]
@@ -102,7 +154,7 @@ cat <<EOF > config.yaml
 apiVersion: kubeadm.k8s.io/v1alpha1
 kind: MasterConfiguration
 api:
- advertiseAddress: 10.0.7.102
+ advertiseAddress: 10.0.7.101
 networking:
   podSubnet: 10.244.0.0/16
 kubernetesVersion: 1.10.2
@@ -123,7 +175,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 设置 pod 网络
 ```
-wget https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml > kube-flannel.yml
 sed -i 's@quay.io@quay.mirrors.ustc.edu.cn@g' kube-flannel.yml
 kubectl apply -f kube-flannel.yml
 ```
@@ -141,7 +193,7 @@ source ~/.bashrc
 
 ## 其他节点加入
 ```
-kubeadm join 10.0.7.102:6443 --token 16ha17.48btyw5cpxee5chb --discovery-token-ca-cert-hash sha256:fb42cb7b320b154bd572c915821ce07416b23b09fb815765d8b098f29b1ec694
+kubeadm join 10.0.7.101:6443 --token njcjuu.wxgjh9wf617io2aa --discovery-token-ca-cert-hash sha256:633238412f529267b54a43a7a79e8855fccb2a2d5bfdd1e63029be24ff423c27
 ```
 
 
