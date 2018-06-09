@@ -14,7 +14,7 @@ git clone git@github.com:kuops/blog-source-code.git
 
 
 ```
-hexo new post <post-title>
+./deploy.sh  new article-name
 ```
 
 # 分类和标签
