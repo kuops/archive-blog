@@ -13,7 +13,25 @@ new(){
         echo "Usage: $0 new aticle-name"
         exit 23
     fi
-    docker run -v $PWD/$BLOG_DIR_NAME:/app  kuops/hexo:latest  hexo new $2
+    docker run -v $PWD:/app  kuops/hexo:latest  hexo new $2
+}
+
+run(){
+    if [ $# -ne 1 ];then
+        echo "Usage: $0 run"
+        exit 24
+    elif ! docker ps |awk '{print $NF}'|grep '^hexo$' &> /dev/null ;then
+        docker run --rm -dit --name hexo -p 4000:4000 -v $PWD:/app  kuops/hexo:latest
+    fi
+}
+
+down(){
+    if [ $# -ne 1 ];then
+        echo "Usage: $0 down"
+        exit 25
+    elif docker ps |awk '{print $NF}'|grep '^hexo$' &> /dev/null ;then
+        docker rm -f hexo
+    fi
 }
 
 push(){
@@ -29,9 +47,13 @@ push(){
 case $1 in
     new)
         npm_install
-        new  $1 $2;;
+        new $@;;
     push)
-        push;;
+        push $@;;
+    run)
+        run  $@;;
+    down)
+        down $@;;
     *)
         echo "Usage: $0 {deploy|new}  [article-name]"
 esac
