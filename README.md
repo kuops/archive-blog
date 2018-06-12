@@ -32,11 +32,10 @@ tags:
 ```
 # 本地测试
 
-本地安装 nodejs 和 hexo 之后运行如下命令
+使用以下命令可以在本机启动 4000 端口，进行访问
 
 ```
-npm install
-hexo s -i <ipaddress>
+./deploy.sh run
 ```
 # Travis CI 持续部署
 

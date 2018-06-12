@@ -51,6 +51,7 @@ case $1 in
     push)
         push $@;;
     run)
+        npm_install
         run  $@;;
     down)
         down $@;;
