@@ -64,7 +64,15 @@ before_install:
 
 # https
 
-使用免费的 Cloudflare 网站注册的 https , 并设置强制跳转，具体参考如下博客
+github pages 从 2018 年 5 月 1 日起 支持自定义域名 https 
 ```
-https://molunerfinn.com/hexo-travisci-https/
+https://blog.github.com/2018-05-01-github-pages-custom-domains-https/
 ```
+具体步骤，在 DNS 中添加 A 记录,将自定义域名指向以下地址
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
