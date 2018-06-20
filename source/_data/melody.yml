@@ -101,7 +101,7 @@ cdn:
 avatar:  /img/avatar.jpg
 
 #top_img: true # false or url of img 
-top_img: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528052348711&di=5ab60d2daeddb7cbf98e8ba9f091e870&imgtype=0&src=http%3A%2F%2Fi1.hdslb.com%2Fbfs%2Farchive%2F763293ce06bf1e684ef0ea3da43ae5008d8564b8.jpg"
+top_img: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529517901642&di=5f7db410ab487b78dd0afc85bc246702&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201610%2F21%2F20161021234613_KvFXP.jpeg"
 
 post_meta:
   date_type: created # created or updated 
