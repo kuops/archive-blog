@@ -102,7 +102,7 @@ avatar:  /img/avatar.jpg
 
 #top_img: true # false or url of img 
 disqus:
-  enable: true
+  enable: false
   shortname: kuops-com
   count: true
 
