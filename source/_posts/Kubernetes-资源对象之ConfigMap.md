@@ -1,5 +1,5 @@
 ---
-title: Kubernetes 资源对象之ConfigMap
+title: Kubernetes资源对象之ConfigMap
 date: 2018-06-22 23:02:02
 categories:
 - kubernetes

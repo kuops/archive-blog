@@ -101,6 +101,65 @@ cdn:
 avatar:  /img/avatar.jpg
 
 #top_img: true # false or url of img 
+top_img: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529517901642&di=5f7db410ab487b78dd0afc85bc246702&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201610%2F21%2F20161021234613_KvFXP.jpeg"
+
+post_meta:
+  date_type: created # created or updated 
+  categories: true
+  tags: true
+
+wordcount:
+  enable: false
+
+toc:
+  enable: true
+
+post_copyright:
+  enable: true
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+auto_excerpt:
+  enable: true
+  length: 150
+
+# slide
+# For reveal.js config, see https://github.com/hakimel/reveal.js#configuration
+slide:
+  separator: ---
+  separator_vertical: --
+  charset: utf-8
+  theme: black
+  # optional
+  mouseWheel: false
+  transition: slide
+  transitionSpeed: default
+  parallaxBackgroundImage: ''
+  parallaxBackgroundSize: ''
+  parallaxBackgroundHorizontal: null
+  parallaxBackgroundVertical: null
+
+# QR_code:
+  # - itemlist:
+  #     img:
+  #     text:
+
+# adv:
+  # enable: false
+  # info: 
+
+# Share System
+# ---------------
+addThis:
+  enable: false
+  #pubid: 
+
+# sharejs:
+  # enable: false
+  # disabled_sites: 
+
+# Comments System
+# ---------------
 disqus:
   enable: false 
   #shortname: 
