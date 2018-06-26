@@ -56,5 +56,5 @@ case $1 in
     down)
         down $@;;
     *)
-        echo "Usage: $0 {deploy|new}  [article-name]"
+        echo "Usage: $0 {push|new|run|down}  [article-name]"
 esac
