@@ -1,5 +1,5 @@
 ---
-title: 创建 Kubernetes 集群: 生成证书
+title: 创建 Kubernetes 集群：生成证书
 date: 2018-07-19 13:31:40
 tags:
 categories:
