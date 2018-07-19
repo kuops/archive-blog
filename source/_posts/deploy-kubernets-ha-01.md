@@ -53,10 +53,10 @@ vagrant-hostmanager (1.8.9)
 # vi: set ft=ruby :
 
 cluster = {
-  "k8s-master1" => { :ip => "10.0.7.101", :disk => "./disk/k8s-master1.vdi" },
-  "k8s-master2" => { :ip => "10.0.7.102", :disk => "./disk/k8s-master2.vdi" },
-  "k8s-master3" => { :ip => "10.0.7.103", :disk => "./disk/k8s-master3.vdi" },
-  "k8s-node1" => { :ip => "10.0.7.104", :disk => "./disk/k8s-node1.vdi" },
+  "k8s-master1" => { :ip => "10.0.7.101", :disk => "./disk/k8s-master1.vdi", :mem => 2048 },
+  "k8s-master2" => { :ip => "10.0.7.102", :disk => "./disk/k8s-master2.vdi", :mem => 2048 },
+  "k8s-master3" => { :ip => "10.0.7.103", :disk => "./disk/k8s-master3.vdi", :mem => 2048 },
+  "k8s-node1" => { :ip => "10.0.7.104", :disk => "./disk/k8s-node1.vdi", :mem => 16384 },
 }
 
 Vagrant.configure("2") do |config|
@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     #v.customize ["modifyvm", :id, '--natdnshostresolver1', 'on']
-    v.memory = 2048
+    #v.memory = 2048
     v.cpus = 2
   end
 
@@ -86,10 +86,10 @@ Vagrant.configure("2") do |config|
           vb.customize ['createhd', '--filename', info[:disk], '--size', 100 * 1024]
         end
         vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', info[:disk]]
+        vb.customize ["modifyvm", :id, "--memory", info[:mem], "--hwvirtex", "on"]
       end # end provider
     end # end config
   end # end cluster
-
 
   config.vm.provision "shell", inline: <<-SHELL
     #设置 root 密码，随自己习惯
