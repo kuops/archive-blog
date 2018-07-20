@@ -161,8 +161,8 @@ addThis:
 # Comments System
 # ---------------
 disqus:
-  enable: false 
-  #shortname: 
+  enable: true
+  shortname: "kuops-com"
   #count: 
 
 # laibili:
