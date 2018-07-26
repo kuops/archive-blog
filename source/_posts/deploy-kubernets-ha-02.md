@@ -6,7 +6,7 @@ categories:
 - kubernetes
 ---
 
-> 本片文章为创建 Kubernets 集群 `第二部分`
+> 本篇文章为创建 Kubernets 集群 `第二部分`
 1.  [环境准备](https://kuops.com/2018/07/19/deploy-kubernets-ha-01/)
 2.  [生成证书](https://kuops.com/2018/07/19/deploy-kubernets-ha-02/)
 3.  [生成kubeconfig](https://kuops.com/2018/07/19/deploy-kubernets-ha-03/)
