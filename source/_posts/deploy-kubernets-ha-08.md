@@ -6,7 +6,7 @@ categories:
 - kubernetes
 ---
 
-> 本篇文章为创建 Kubernets 集群 `第八部分`
+> 本片文章为创建 Kubernets 集群 `第八部分`
 1.  [环境准备](https://kuops.com/2018/07/19/deploy-kubernets-ha-01/)
 2.  [生成证书](https://kuops.com/2018/07/19/deploy-kubernets-ha-02/)
 3.  [生成kubeconfig](https://kuops.com/2018/07/19/deploy-kubernets-ha-03/)
@@ -62,12 +62,12 @@ kubectl config set-credentials kubelet-bootstrap \
 
 ## 部署 kubelet 组件
 
-kubelet 动态配置文件
+kubelet 配置文件
 
 ```
 CLUSTER_DNS_IP=10.96.0.10
 
-cat <<EOF> /etc/kubernetes/kubelet-dynamic-conf.yaml
+cat <<EOF> /etc/kubernetes/kubelet-conf.yaml
 address: 0.0.0.0
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
@@ -127,6 +127,7 @@ nodeStatusUpdateFrequency: 10s
 oomScoreAdj: -999
 podPidsLimit: -1
 port: 10250
+readOnlyPort: 10255
 registryBurst: 10
 registryPullQPS: 5
 resolvConf: /etc/resolv.conf
@@ -157,7 +158,7 @@ Requires=docker.service
 ExecStart=/usr/local/bin/kubelet \\
   --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \\
   --kubeconfig=/etc/kubernetes/kubelet.conf \\
-  --config=/etc/kubernetes/kubelet-dynamic-conf.yaml \\
+  --config=/etc/kubernetes/kubelet-conf.yaml \\
   --pod-infra-container-image=kuops/pause-amd64:3.1 \\
   --allow-privileged=true \\
   --network-plugin=cni \\
