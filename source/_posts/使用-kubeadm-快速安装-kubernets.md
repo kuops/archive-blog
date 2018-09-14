@@ -5,6 +5,7 @@ categories:
 - kubernetes
 ---
 
+
 ## 配置 vagrant
 
 Vagrantfile 如下：
@@ -141,22 +142,11 @@ systemctl restart kubelet
 修改基础镜像地址
 
 ```
-sed  -i '9aEnvironment="KUBELET_EXTRA_ARGS=--pod-infra-container-image=gcr.mirrors.ustc.edu.cn/google_containers/pause-amd64:3.0"' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+sed  -i '9aEnvironment="KUBELET_EXTRA_ARGS=--pod-infra-container-image=kuops/pause-amd64:3.0"' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 systemctl  daemon-reload
 systemctl restart kubelet
 ```
 
-手动拉取镜像,具体镜像版本可查看 https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/ 
-
-```
-docker pull gcr.mirrors.ustc.edu.cn/google_containers/kube-apiserver-amd64:v1.10.2
-docker pull gcr.mirrors.ustc.edu.cn/google_containers/kube-controller-manager-amd64:v1.10.2
-docker pull gcr.mirrors.ustc.edu.cn/google_containers/kube-scheduler-amd64:v1.10.2
-docker pull gcr.mirrors.ustc.edu.cn/google_containers/kube-proxy-amd64:v1.10.2
-docker pull gcr.mirrors.ustc.edu.cn/google_containers/etcd-amd64:3.1.12
-docker pull gcr.mirrors.ustc.edu.cn/google_containers/pause-amd64:3.0
-docker pull coredns/coredns:1.0.6
-```
 
 ## Master 节点
 
@@ -165,6 +155,7 @@ docker pull coredns/coredns:1.0.6
 ```
 swapon -s|awk 'NR>1{print "swapoff",$1}'|bash
 ```
+
 
 生成配置文件
 
@@ -179,8 +170,14 @@ networking:
 kubernetesVersion: 1.10.2
 featureGates:
   CoreDNS: true
-imageRepository: "gcr.mirrors.ustc.edu.cn/google_containers"
+imageRepository: "kuops"
 EOF
+```
+
+提前拉取镜像
+
+```
+kubeadm config images pull  --config config.yaml
 ```
 
 启动
