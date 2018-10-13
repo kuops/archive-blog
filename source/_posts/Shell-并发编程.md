@@ -1,6 +1,6 @@
 ---
 title: 创建 Kubernetes 集群：环境准备
-date: 2018-07-19 13:31:40
+date: 2018-10-13 15:35:40
 tags:
 categories:
 - Shell
