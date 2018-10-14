@@ -30,7 +30,7 @@ Linux shell 使用 3 种标准的 I/O 流，每种流都与一个文件描述符
 |cmd &> /dev/null|丢掉标准错误和标准输出|
 |cmd < file| 将文件作为命令的标准输入|
 |cmd << EOF </br>foo</br>bar</br>EOF|将多行文本作为命令的标准输入|
-|cmd << EOF </br>&lt;tab&gt;foo</br>&lt;tab&gt;bar</br>EOF|将多行文本作为命令的标准输入,忽略 tab 键 |
+|cmd <<- EOF </br>&lt;tab&gt;foo</br>&lt;tab&gt;bar</br>EOF|将多行文本作为命令的标准输入,忽略 tab 键 |
 |cmd <<< "string"|将单行文本作为命令的标准输入|
 |exec 2> file|将所有命令的标准错误重定向到文件|
 |exec 3< file|使用自定义文件描述符打开文件进行读操作|
