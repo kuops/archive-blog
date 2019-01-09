@@ -6,7 +6,6 @@ categories:
 - wsl
 ---
 
-[TOC]
 
 ## WSL 常用操作
 ### 安装 WSL
