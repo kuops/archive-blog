@@ -1612,3 +1612,60 @@ spec:
     protocol: TCP
 EOF
 ```
+
+## kubectl 设置
+
+```
+echo "source <(kubectl completion bash)" >> /etc/profile.d/kubernetes.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/kubernetes.sh
+mkdir -p ~/.kube/
+cp -f /etc/kubernetes/admin.conf ~/.kube/config
+```
+
+## 安装 helm
+
+安装 helm
+```
+apt-get install socat -y
+curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.12.3-linux-amd64.tar.gz
+tar xf helm-v2.12.3-linux-amd64.tar.gz
+mv linux-amd64/helm  /usr/local/bin/
+mv linux-amd64/tiller  /usr/local/bin/
+```
+
+初始化 helm
+```
+kubectl  create  serviceaccount tiller -n kube-system
+
+kubectl  create  clusterrolebinding tiller \
+    --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+helm init --upgrade --service-account tiller \
+    --skip-refresh -i kuops/tiller:v2.12.3 \
+    --stable-repo-url https://kuops.com/helm-charts-mirror
+
+helm repo update
+
+echo "source <(helm completion bash)" > /etc/profile.d/helm.sh
+source  /etc/profile.d/helm.sh
+```
+
+## 安装 istio
+
+```
+curl -LO https://github.com/istio/istio/releases/download/1.0.6/istio-1.0.6-linux.tar.gz
+tar xf istio-1.0.6-linux.tar.gz
+cp istio-1.0.6/bin/istioctl  /usr/local/bin
+
+helm template istio-1.0.6/install/kubernetes/helm/istio --name istio \
+    --namespace istio-system \
+    --set global.mtls.enabled=true \
+    --set tracing.enabled=true \
+    --set servicegraph.enabled=true \
+    --set prometheus.enabled=true \
+    --set grafana.enabled=true > istio.yaml
+
+kubectl create namespace istio-system
+kubectl apply -f istio.yaml
+```
