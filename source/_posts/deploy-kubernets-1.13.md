@@ -560,7 +560,7 @@ vrrp_instance k8s-vip {
     }
 
     track_script {
-        haproxy-check
+        ha-check
     }
 }
 EOF
